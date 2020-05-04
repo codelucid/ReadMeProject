@@ -4,8 +4,11 @@ const util = require("util");
 const axios = require("axios");
 const dotenv = require("dotenv");
 
+// I don't think I need readFileAsync, because we can destructure the returned object?
+// const readFileAsync = util.promisify(fs.readFile)
 const writeFileAsync = util.promisify(fs.writeFile);
 
+// Do I need function promptUser here? Or just inquirer.prompt?
 function promptUser() {
         return inquirer.prompt([
             {
@@ -41,7 +44,7 @@ function promptUser() {
                 name: "install"
             },
             {
-                type: "confirm",
+                type: "input",
                 message: "What command should be entered to run tests?",
                 name: "test",
                 default: "npm test"
@@ -57,88 +60,93 @@ function promptUser() {
                 name: "contribute"
             },
         ])
-}
-// questions about this section. Should I reference activity 33?
-async function getGitHub() {
-    try {
-        const {github} = await inquirer.prompt({
-            message: "What is your Github username?",
-            name: "github"
-        });
-        const {data} = await axios.get(`https://api.github.com/users/${github}`);
-        const userNames = res.data.map(function(data){
-            return data.email;
-        })
-        const userNameStr = userNames.join("\n");
-        console.log(data);
-    }
-    catch (err) {
-        console.log(err);
-    }
-}
-getGitHub();
+    } 
+// questions about this section. Should I reference activity 33? Or 38 and 39?
+    async function getGitHub() {
+        try {
+            const {github} = await inquirer.prompt({
+                message: "What is your Github username?",
+                name: "github"
+            });
+            const {data} = await axios.get(`https://api.github.com/users/${github}/events/public`);
+            console.log(data);
+            const {email, githubEmail} = data;
+            const {avatar_url, githubImage} = data.actor;
+        
+            const githubJSON = [githubEmail, githubImage].map(JSON.parse);
+
+            // Do I need to write to readme here, too? For the picture and email? 
+            // Would this create an object in the readme?
+            await writeFileAsync("readme.md", JSON.stringify(githubJSON, null, 2));
+        }
+        catch (err) {
+            console.log(err);
+        }
+    } 
+
 
 // do we use a markdown syntax, instead of HTML?
-function generateREADME(fileName, data) {
-    return `
-    # ${fileName}  
+    function generateREADME(answers, data) {
+        return `
+        # ${fileName}  
 
-    // place shields.io badge here
+        ![GitHub license](https://img.shields.io/badge/license-${license}-brightgreen)
 
-    ## Description  
+        ## Description  
 
-    ${data.description}  
+        ${data.description}  
 
-    ## Table of Contents
-    - Installation 
-    - Usage
-    - License
-    - Contributing
-    - Tests
-    - Questions  
+        ## Table of Contents
+        - Installation 
+        - Usage
+        - License
+        - Contributing
+        - Tests
+        - Questions  
 
-    ## Installation  
+        ## Installation  
 
-    To install necessary dependencies, run the following command:
-    >${data.install}  
+        To install necessary dependencies, run the following command:
+        >${data.install}  
 
-    ## Usage  
+        ## Usage  
 
-    This is what the user needs to know about using the repo:
-    ${data.usage}  
+        This is what the user needs to know about using the repo:
+        ${data.usage}  
 
-    ## License  
+        ## License  
 
-    The license for this project:
-    ${data.license}  
+        The license for this project:
+        ${data.license}  
 
-    ## Contributing  
+        ## Contributing  
 
-    This is how the use can contribute to the project:
-    ${data.contribute}  
+        This is how the use can contribute to the project:
+        ${data.contribute}  
 
-    ## Tests  
+        ## Tests  
 
-    This is the command to initiate testing:
-    >${data.test}  
+        This is the command to initiate testing:
+        >${data.test}  
 
-    ## Questions  
+        ## Questions  
 
-    Picture Here
-    If you have questions about the repo, contact ${data.github} directly at ${emailfromAxios}:
-     `
-}
+        ${githubimage}  
 
-async function init() {
-    try {
-        const answers = await promptUser();
-        const readme = generateREADME(answers);
-        await writeFileAsync("readme.md", readme);
-        console.log("Successfully wrote to readme.md");
+        If you have questions about the repo, contact ${data.github} directly at ${githubemail}:
+        `
     }
-    catch(err) {
-    console.log(err);
-    }
-}   
+
+    async function init() {
+        try {
+            const answers = await promptUser(await getGitHub());
+            const readme = generateREADME(answers);
+            await writeFileAsync("readme.md", readme);
+            console.log("Successfully wrote to readme.md");
+        }
+        catch(err) {
+        console.log(err);
+        }
+    }   
 
 init();

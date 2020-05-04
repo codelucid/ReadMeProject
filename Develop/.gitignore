@@ -1,2 +1,5 @@
 node_modules
 .env
+
+HOST=localhost
+PORT=1234
