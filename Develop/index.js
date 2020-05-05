@@ -10,7 +10,7 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
 // Do I need function promptUser here? Or just inquirer.prompt?
 function promptUser() {
-        return inquirer.prompt([
+    return inquirer.prompt([
             {
                 type: "input",
                 message: "What is your Github username?",
@@ -58,35 +58,34 @@ function promptUser() {
                 type: "input",
                 message: "What does the user need to know about contributing to the repo?",
                 name: "contribute"
-            },
-        ])
-    } 
-// questions about this section. Should I reference activity 33? Or 38 and 39?
-    async function getGitHub() {
-        try {
-            const {github} = await inquirer.prompt({
-                message: "What is your Github username?",
-                name: "github"
+            }
+        ])       
+        .then(function({ github }) {
+            const queryUrl = `https://api.github.com/users/${github}`;
+                
+            axios
+            .get(queryUrl)
+            .then(function(res) {
+                console.log(res.data);
+                
+                const {gitAvatar} = res.data.avatar_url
+                const {gitEmail} = res.data.email
+                
+                const profileAvatar = gitAvatar.map(JSON.parse);
+                const profileEmail = gitEmail.map(JSON.parse);
+                    return profileAvatar, profileEmail;
+                // const profilePic = [gitAvatar, gitEmail].map(function() {
+                //     return profilePic;
+                // })
+            })
+            .catch(function(err) {
+                console.log(err);
             });
-            const {data} = await axios.get(`https://api.github.com/users/${github}/events/public`);
-            console.log(data);
-            const {email, githubEmail} = data;
-            const {avatar_url, githubImage} = data.actor;
-        
-            const githubJSON = [githubEmail, githubImage].map(JSON.parse);
-
-            // Do I need to write to readme here, too? For the picture and email? 
-            // Would this create an object in the readme?
-            await writeFileAsync("readme.md", JSON.stringify(githubJSON, null, 2));
-        }
-        catch (err) {
-            console.log(err);
-        }
-    } 
-
+        });
+} 
 
 // do we use a markdown syntax, instead of HTML?
-    function generateREADME(answers, data) {
+    function generateREADME(data) {
         return `
         # ${fileName}  
 
@@ -131,22 +130,22 @@ function promptUser() {
 
         ## Questions  
 
-        ${githubimage}  
+        ${profileAvatar}  
 
-        If you have questions about the repo, contact ${data.github} directly at ${githubemail}:
+        If you have questions about the repo, contact ${data.github} directly at ${profileEmail}:
         `
     }
 
-    async function init() {
-        try {
-            const answers = await promptUser(await getGitHub());
-            const readme = generateREADME(answers);
-            await writeFileAsync("readme.md", readme);
-            console.log("Successfully wrote to readme.md");
-        }
-        catch(err) {
-        console.log(err);
-        }
-    }   
+async function init() {
+    try {
+        const answers = await promptUser();
+        const readme = generateREADME(answers);
+        await writeFileAsync("readme.md", readme);
+        console.log("Successfully wrote to readme.md");
+    }
+    catch(err) {
+    console.log(err);
+    }
+}   
 
 init();
