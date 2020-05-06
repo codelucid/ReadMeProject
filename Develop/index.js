@@ -10,90 +10,71 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
 // Do I need function promptUser here? Or just inquirer.prompt?
 function promptUser() {
-    return inquirer.prompt([
-            {
-                type: "input",
-                message: "What is your Github username?",
-                name: "github"
-            },
-            {
-                type: "input",
-                message: "What is your project title?",
-                name: "fileName"
-            },
-            {
-                type: "input",
-                message: "Please write a short description of your project.",
-                name: "description"
-            },
-            {
-                type: "list",
-                message: "What kind of license should your project have?",
-                name: "license",
-                choices: [
-                    "MIT",
-                    "APACHE 2.0",
-                    "GPL 3.0",
-                    "BSD 3",
-                    "None"
-                ]
-            },
-            {
-                type: "input",
-                message: "What command should be used to install dependencies?",
-                name: "install"
-            },
-            {
-                type: "input",
-                message: "What command should be entered to run tests?",
-                name: "test",
-                default: "npm test"
-            },
-            {
-                type: "input",
-                message: "What does the user need to know about using the repo?",
-                name: "usage"
-            },
-            {
-                type: "input",
-                message: "What does the user need to know about contributing to the repo?",
-                name: "contribute"
-            }
-        ])       
-        .then(function({ github }) {
-            const queryUrl = `https://api.github.com/users/${github}`;
-                
-            axios
-            .get(queryUrl)
-            .then(function(res) {
-                console.log(res.data);
-                
-                const {gitAvatar} = res.data.avatar_url
-                const {gitEmail} = res.data.email
-                
-                const profileAvatar = gitAvatar.map(JSON.parse);
-                const profileEmail = gitEmail.map(JSON.parse);
-                    return profileAvatar, profileEmail;
-                // const profilePic = [gitAvatar, gitEmail].map(function() {
-                //     return profilePic;
-                // })
-            })
-            .catch(function(err) {
-                console.log(err);
-            });
-        });
-} 
-
+        return inquirer.prompt([
+        {
+            type: "input",
+            message: "What is your Github username?",
+            name: "github"
+        },
+        {
+            type: "input",
+            message: "What is your project title?",
+            name: "fileName"
+        },
+        {
+            type: "input",
+            message: "Please write a short description of your project.",
+            name: "description"
+        },
+        {
+            type: "list",
+            message: "What kind of license should your project have?",
+            name: "license",
+            choices: [
+                "MIT",
+                "APACHE 2.0",
+                "GPL 3.0",
+                "BSD 3",
+                "None"
+            ]
+        },
+        {
+            type: "input",
+            message: "What command should be used to install dependencies?",
+            name: "install"
+        },
+        {
+            type: "input",
+            message: "What command should be entered to run tests?",
+            name: "test",
+            default: "npm test"
+        },
+        {
+            type: "input",
+            message: "What does the user need to know about using the repo?",
+            name: "usage"
+        },
+        {
+            type: "input",
+            message: "What does the user need to know about contributing to the repo?",
+            name: "contribute"
+        }
+    ]);
+    console.log(res);
+    
+    
+    }
+    
 // do we use a markdown syntax, instead of HTML?
-    function generateREADME(data) {
+    function generateReadMe(res) {
         return `
-        # ${fileName}  
+        # ${res.fileName}  
 
-        ![GitHub license](https://img.shields.io/badge/license-${license}-brightgreen)
+        ![GitHub license](https://img.shields.io/badge/license-${res.license}-brightgreen)
 
         ## Description  
 
-        ${data.description}  
+        ${res.description}  
 
         ## Table of Contents
         - Installation 
@@ -106,46 +87,56 @@ function promptUser() {
         ## Installation  
 
         To install necessary dependencies, run the following command:
-        >${data.install}  
+        >${res.install}  
 
         ## Usage  
 
         This is what the user needs to know about using the repo:
-        ${data.usage}  
+        ${res.usage}  
 
         ## License  
 
         The license for this project:
-        ${data.license}  
+        ${res.license}  
 
         ## Contributing  
 
-        This is how the use can contribute to the project:
-        ${data.contribute}  
+        This is how the user can contribute to the project:
+        ${res.contribute}  
 
         ## Tests  
 
         This is the command to initiate testing:
-        >${data.test}  
+        >${res.test}  
 
         ## Questions  
 
-        ${profileAvatar}  
-
-        If you have questions about the repo, contact ${data.github} directly at ${profileEmail}:
-        `
+        If you have questions about the repo, contact ${res.github} directly.
+        `;
+    
     }
-
-async function init() {
-    try {
-        const answers = await promptUser();
-        const readme = generateREADME(answers);
-        await writeFileAsync("readme.md", readme);
+// async function init() {
+//     try {
+//         const res = await promptUser();
+//         const readme = generateReadMe(res);
+//         await writeFileAsync("readme.md", readme);
+//         console.log("Successfully wrote to readme.md");
+//     }
+//     catch (err) {
+//         console.log(err);
+//     }
+// }
+// init();    
+promptUser()   
+.then(function(res) {
+        const readme = generateReadMe(res);
+    
+        return writeFileAsync("readme.md", readme);
+    })
+    .then(function() {
         console.log("Successfully wrote to readme.md");
-    }
-    catch(err) {
-    console.log(err);
-    }
-}   
-
-init();
+    })    
+    .catch(function(err) {
+        console.log(err);
+    });
+    
