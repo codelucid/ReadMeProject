@@ -1,11 +1,11 @@
 
-# jfeilll  
+# ReadMe Generator  
 
-![GitHub license](https://img.shields.io/badge/license-GPL3.0-brightgreen)
+![GitHub license](https://img.shields.io/badge/license-APACHE2.0-brightgreen)
 
 ## Description  
 
-cool  
+create a readme with ease  
 
 ## Table of Contents
 - Installation 
@@ -18,7 +18,7 @@ cool
 ## Installation  
 
 To install necessary dependencies, run the following command:
->nomp   
+>npm install  
 
 ## Usage  
 
@@ -28,7 +28,7 @@ a lot
 ## License  
 
 The license for this project:
-GPL3.0  
+APACHE2.0  
 
 ## Contributing  
 
@@ -44,4 +44,4 @@ This is the command to initiate testing:
 
 ![Profile Picture](https://avatars3.githubusercontent.com/u/11791361?v=4)
 
-If you have questions about the repo, contact codelucid directly, at coidje.
+If you have questions about the repo, contact codelucid directly, at coophealey@gmail.com.
