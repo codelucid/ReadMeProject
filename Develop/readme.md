@@ -1,46 +1,47 @@
 
-        # Best Project in the World  
+# jfeilll  
 
-        ![GitHub license](https://img.shields.io/badge/license-GPL 3.0-brightgreen)
+![GitHub license](https://img.shields.io/badge/license-GPL3.0-brightgreen)
 
-        ## Description  
+## Description  
 
-        It is awesome  
+cool  
 
-        ## Table of Contents
-        - Installation 
-        - Usage
-        - License
-        - Contributing
-        - Tests
-        - Questions  
+## Table of Contents
+- Installation 
+- Usage
+- License
+- Contributing
+- Tests
+- Questions  
 
-        ## Installation  
+## Installation  
 
-        To install necessary dependencies, run the following command:
-        >npm install  
+To install necessary dependencies, run the following command:
+>nomp   
 
-        ## Usage  
+## Usage  
 
-        This is what the user needs to know about using the repo:
-        a ton of stuff  
+This is what the user needs to know about using the repo:
+a lot  
 
-        ## License  
+## License  
 
-        The license for this project:
-        GPL 3.0  
+The license for this project:
+GPL3.0  
 
-        ## Contributing  
+## Contributing  
 
-        This is how the user can contribute to the project:
-        a lot of things  
+This is how the user can contribute to the project:
+a little  
 
-        ## Tests  
+## Tests  
 
-        This is the command to initiate testing:
-        >npm test  
+This is the command to initiate testing:
+>npm test  
 
-        ## Questions  
+## Questions  
 
-        If you have questions about the repo, contact codelucid directly, if you can.
-        
+![Profile Picture](https://avatars3.githubusercontent.com/u/11791361?v=4)
+
+If you have questions about the repo, contact codelucid directly, at coidje.
