@@ -43,7 +43,8 @@ This is the command to initiate testing:
 
 ## Questions  
 
-![Profile Picture](${data.avatarPic})
+
+<img src="${data.avatarPic}.png" alt="profilePic" title="profilePic" width="50" />
 
 If you have questions about the repo, contact ${data.username} directly, at ${data.email}.
 `;
