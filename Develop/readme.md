@@ -1,11 +1,11 @@
 
-# ReadMe Generator  
+# Employee Tracker  
 
-![GitHub license](https://img.shields.io/badge/license-APACHE2.0-brightgreen)
+![GitHub license](https://img.shields.io/badge/license-None-brightgreen)
 
 ## Description  
 
-A really cool way to generate a ReadMe  
+A wonderful way to add employees, their roles, and which departments they work in for an organization.   
 
 ## Table of Contents
 - Installation 
@@ -23,17 +23,17 @@ To install necessary dependencies, run the following command:
 ## Usage  
 
 This is what the user needs to know about using the repo:
-commit often  
+This project uses Node.js and interacts with MySQL server.  
 
 ## License  
 
 The license for this project:
-APACHE2.0  
+None  
 
 ## Contributing  
 
 This is how the user can contribute to the project:
-and commit more  
+Nothing is setup for extra contributions at this time.  
 
 ## Tests  
 
