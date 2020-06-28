@@ -44,6 +44,6 @@ This is the command to initiate testing:
 If you have questions about the repo, contact Codelucid directly, at coophealey@gmail.com.
 
 
-[![My Profile Picture](/develop/profilePic.png)](https://github.com/codelucid "My Profile Picture")
+[![My Profile Picture](/Develop/profilePic.png)](https://github.com/codelucid "My Profile Picture")
 
 [My Portfolio](https://codelucid.github.io/Portfolio/ "My Portfolio")
