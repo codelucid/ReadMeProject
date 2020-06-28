@@ -43,10 +43,12 @@ This is the command to initiate testing:
 
 ## Questions  
 
-
-<img src="${data.avatarPic}.png" alt="profilePic" title="profilePic" width="50" />
-
 If you have questions about the repo, contact ${data.username} directly, at ${data.email}.
+
+[![My Profile Picture](/profilePic.png)](https://github.com/codelucid "My Profile Picture")
+
+[My Portfolio](https://codelucid.github.io/Portfolio/ "My Portfolio")
+
 `;
 
 }

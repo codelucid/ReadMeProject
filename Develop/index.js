@@ -76,7 +76,7 @@ function promptUser() {
 async function init() {
     try {
         const answers = await promptUser();
-        answers.avatarPic = await api();
+        // answers.avatarPic = await api();
         const readme = generateMarkdown(answers);
         await writeFileAsync("readme.md", readme);
         console.log("Successfully wrote to readme.md");
