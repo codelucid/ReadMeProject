@@ -4,7 +4,7 @@
 
 ## Description  
 
-This is a ReadMe markdown generator.  It dynamically creates a ReadMe.md file!  
+Need a quick ReadMe markdown file to be generated? This application will take in user input, via the terminal, and dynamically generate a markdown file! Quick, easy, and effective!  
 
 ## Table of Contents
 - Installation 
